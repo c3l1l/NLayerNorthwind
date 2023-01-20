@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NorthwindExample.Core.Repositories
+namespace NorthwindExample.Core.DTOs
 {
-    public interface IProductRepository:IGenericRepository<Product>
+    public class ProductsWithCategoryDto:ProductDto
     {
-        Task<List<Product>> GetProductsWithCategory();
+       public CategoryDto Category { get; set; }
     }
 }

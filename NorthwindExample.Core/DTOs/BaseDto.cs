@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NorthwindExample.Core.Models
+namespace NorthwindExample.Core.DTOs
 {
-    public class BaseEntity
+    public class BaseDto
     {
-        
+        public int Id { get; set; }
     }
 }
