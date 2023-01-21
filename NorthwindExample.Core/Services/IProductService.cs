@@ -10,6 +10,6 @@ namespace NorthwindExample.Core.Services
 {
     public interface IProductService:IService<Product>
     {
-        Task<List<Product>> GetProductsWithCategory();
+        Task<List<ProductsWithCategoryDto>> GetProductsWithCategory();
     }
 }

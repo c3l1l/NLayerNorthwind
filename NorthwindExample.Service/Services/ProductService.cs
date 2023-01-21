@@ -23,11 +23,11 @@ namespace NorthwindExample.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<List<Product>> GetProductsWithCategory()
+        public async Task<List<ProductsWithCategoryDto>> GetProductsWithCategory()
         {
             var products=await _productRepository.GetProductsWithCategory();
-            //var productWithCategoryDto = _mapper.Map<List<ProductsWithCategoryDto>>(product);
-            return products;
+            var productWithCategoryDto = _mapper.Map<List<ProductsWithCategoryDto>>(products);
+            return productWithCategoryDto;
         }
 
         

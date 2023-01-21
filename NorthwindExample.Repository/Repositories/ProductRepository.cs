@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NorthwindExample.Core.DTOs;
 using NorthwindExample.Core.Models;
 using NorthwindExample.Core.Repositories;
 using NorthwindExample.Repository.DbContexts;
@@ -18,7 +19,8 @@ namespace NorthwindExample.Repository.Repositories
 
         public async Task<List<Product>> GetProductsWithCategory()
         {
-            return await _context.Products.Include(x=>x.Category).ToListAsync();
+            var x=await _context.Products.Include(x=>x.Category).ToListAsync();
+            return x;
         }
     }
 }

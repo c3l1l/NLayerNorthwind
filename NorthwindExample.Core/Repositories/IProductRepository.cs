@@ -1,4 +1,5 @@
-﻿using NorthwindExample.Core.Models;
+﻿using NorthwindExample.Core.DTOs;
+using NorthwindExample.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
