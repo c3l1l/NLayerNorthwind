@@ -2,6 +2,7 @@
 using NorthwindExample.Core.Repositories;
 using NorthwindExample.Core.Services;
 using NorthwindExample.Core.UnitOfWorks;
+using NorthwindExample.Service.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,8 @@ namespace NorthwindExample.Service.Services
             var hasProduct=await _repository.GetByIdAsync(id);
             if (hasProduct == null)
             {
-                throw new Exception($"{typeof(T).Name} ({id}) not found");
+                //throw new Exception($"{typeof(T).Name} ({id}) not found");
+                throw new NotFoundException($"{typeof(T).Name} ({id}) not found");
             }
             return hasProduct;
         }

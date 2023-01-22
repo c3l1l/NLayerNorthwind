@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NorthwindExample.API.Filters;
 using NorthwindExample.Core.DTOs;
 using NorthwindExample.Core.Models;
 using NorthwindExample.Core.Services;
@@ -27,6 +28,7 @@ namespace NorthwindExample.API.Controllers
             var productsDto=_mapper.Map<List<ProductDto>>(products.ToList());            
             return CreateCustomActionResult(CustomResponseDto<List<ProductDto>>.Success(200, productsDto));
         }
+        [ServiceFilter(typeof(NotFoundFilter<Product>))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -48,6 +50,8 @@ namespace NorthwindExample.API.Controllers
             return CreateCustomActionResult(CustomResponseDto<NoContentDto>.Success(204));
 
         }
+
+        [ServiceFilter(typeof(NotFoundFilter<Product>))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {

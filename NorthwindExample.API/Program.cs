@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NorthwindExample.API.Filters;
+using NorthwindExample.API.Middlewares;
 using NorthwindExample.API.Modules;
 using NorthwindExample.Repository.DbContexts;
 using NorthwindExample.Service.Mapping;
@@ -26,6 +27,9 @@ builder.Services.Configure<ApiBehaviorOptions>(opt =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped(typeof(NotFoundFilter<>));
+
 builder.Services.AddAutoMapper(typeof(MapProfile));
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
@@ -47,6 +51,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCustomException();
 
 app.UseAuthorization();
 
