@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace NorthwindExample.Core.DTOs
 {
-    public class BaseDto
+    public class NoContentDto
     {
-        //public int Id { get; set; }
     }
 }

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace NorthwindExample.Core.DTOs
 {
-    public class ProductUpdateDto:BaseDto
+    public class ProductUpdateDto
     {
+        public int ProductId { get; set; }
         public string ProductName { get; set; }
         public int SupplierID { get; set; }
         public int CategoryID { get; set; }

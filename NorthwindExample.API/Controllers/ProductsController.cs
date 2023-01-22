@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using NorthwindExample.Core.DTOs;
 using NorthwindExample.Core.Models;
 using NorthwindExample.Core.Services;
+using NorthwindExample.Service.Validations;
 
 namespace NorthwindExample.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : CustomBaseController
     {
         private readonly IMapper _mapper;
         private readonly IProductService _productService;
@@ -23,28 +24,28 @@ namespace NorthwindExample.API.Controllers
         public async Task<IActionResult> All()
         {
             var products=await _productService.GetAllAsync();
-            var productsDto=_mapper.Map<List<ProductDto>>(products.ToList());
-            return Ok(products.ToList());
+            var productsDto=_mapper.Map<List<ProductDto>>(products.ToList());            
+            return CreateCustomActionResult(CustomResponseDto<List<ProductDto>>.Success(200, productsDto));
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var product= await _productService.GetByIdAsync(id);           
-            return Ok(_mapper.Map<ProductDto>(product));
+
+            var productDto = _mapper.Map<ProductDto>(await _productService.GetByIdAsync(id));
+            return CreateCustomActionResult(CustomResponseDto<ProductDto>.Success(200, productDto));
         }
         [HttpPost]
         public async Task<IActionResult> Save(ProductAddDto productAddDto)
         {
             var product = _mapper.Map<Product>(productAddDto);
-            var newProduct = await _productService.AddAsync(product);
-            return Ok(_mapper.Map<ProductDto>(newProduct));
-           // return Created("",_mapper.Map<ProductDto>(newProduct));
+            var productDto = _mapper.Map<ProductDto>(await _productService.AddAsync(product));
+            return CreateCustomActionResult(CustomResponseDto<ProductDto>.Success(201, productDto));
         }
         [HttpPut]
         public async Task<IActionResult> Update(ProductUpdateDto productUpdateDto)
         {
-            await _productService.UpdateAsync(_mapper.Map<Product>(productUpdateDto));
-            return NoContent();
+            await _productService.UpdateAsync(_mapper.Map<Product>(productUpdateDto));           
+            return CreateCustomActionResult(CustomResponseDto<NoContentDto>.Success(204));
 
         }
         [HttpDelete("{id}")]
@@ -52,14 +53,13 @@ namespace NorthwindExample.API.Controllers
         {
             var product = await _productService.GetByIdAsync(id);
             await _productService.RemoveAsync(product);
-            return NoContent();
+            return CreateCustomActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
         [HttpGet("GetProductsWithCategory")]
         public async Task<IActionResult> GetProductsWithCategory()
         {
-            var products = await _productService.GetProductsWithCategory();
-
-            return Ok(products);
+            var productsWithCategoryDtos = await _productService.GetProductsWithCategory();            
+            return CreateCustomActionResult(CustomResponseDto<List<ProductsWithCategoryDto>>.Success(200, productsWithCategoryDtos));
         }
     }
 }

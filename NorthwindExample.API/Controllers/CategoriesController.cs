@@ -9,7 +9,7 @@ namespace NorthwindExample.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class CategoriesController : CustomBaseController
     {
         private readonly ICategoryService _categoryService;
         private readonly IFileService _fileService;
@@ -25,21 +25,26 @@ namespace NorthwindExample.API.Controllers
         public async Task<IActionResult> All() {
             var categories = await _categoryService.GetAllAsync();
             var categoriesDto = _mapper.Map<List<CategoryDto>>(categories);
-            return Ok(categoriesDto);
+            //return Ok(categoriesDto);
+            return CreateCustomActionResult(CustomResponseDto<List<CategoryDto>>.Success(200,categoriesDto));
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id) {
-            var category = await _categoryService.GetByIdAsync(id);
-
-            return Ok(_mapper.Map<CategoryDto>(category));
+            var categoryDto = _mapper.Map<CategoryDto>(await _categoryService.GetByIdAsync(id));
+           // return Ok(_mapper.Map<CategoryDto>(category));
+           return CreateCustomActionResult(CustomResponseDto<CategoryDto>.Success(200,categoryDto));
         }
         [HttpPost]
         public async Task<IActionResult> Save([FromForm]CategoryAddDto categoryAddDto)
         {
             var fileByte=_fileService.FileConvertByteToDb(categoryAddDto.Picture);
             var category = _mapper.Map<Category>(categoryAddDto);
-            category.Picture= fileByte;          
-            return Ok(await _categoryService.AddAsync(category));            
+            category.Picture= fileByte;
+            var newCategoryDto=_mapper.Map<CategoryDto>(await _categoryService.AddAsync(category));
+            // return Ok(await _categoryService.AddAsync(category));
+            //return Created("",category);
+            return CreateCustomActionResult(CustomResponseDto<CategoryDto>.Success(201, newCategoryDto));
+
         }
         [HttpPut]
         public async Task<IActionResult> Update([FromForm]CategoryUpdateDto categoryUpdateDto)
@@ -48,14 +53,16 @@ namespace NorthwindExample.API.Controllers
             var category = _mapper.Map<Category>(categoryUpdateDto);
             category.Picture = fileByte;
             await _categoryService.UpdateAsync(category);
-            return NoContent();
+            // return NoContent();
+            return CreateCustomActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
         [HttpDelete]
         public async Task<IActionResult> Remove(int id)
         {
             var category = await _categoryService.GetByIdAsync(id);
             await _categoryService.RemoveAsync(category);
-            return NoContent();
+            //return NoContent();
+            return CreateCustomActionResult(CustomResponseDto<NoContentDto>.Success(204));
         }
     }
 }
