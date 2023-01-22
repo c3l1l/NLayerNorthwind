@@ -1,0 +1,41 @@
+﻿@using NorthwindExample.Core.DTOs;
+@model List<ProductsWithCategoryDto>
+
+   
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.ProductName)</th>
+            <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.CategoryID)</th>
+            <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.QuantityPerUnit)</th>
+            <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.UnitPrice)</th>
+            <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.Discontinued)</th>
+            <th scope="col">Actions</th>
+            
+        </tr>
+    </thead>
+    <tbody>        
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.CategoryID</td>
+                <td><select  asp-items="ViewBag.categories"></select></td>
+
+                <td>@item.QuantityPerUnit</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.Discontinued</td>      
+                <td> <a class="btn btn-warning" asp-action="Update" asp-route-id="@item.ProductId">Update</a>
+                <a class="btn btn-danger" asp-action="Remove" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+        @foreach(var category in ViewBag.categories)
+        {
+            <h1>@category.CategoryName</h1>
+        }
+    </tbody>
+</table>
