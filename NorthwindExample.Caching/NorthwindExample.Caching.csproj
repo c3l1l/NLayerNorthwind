@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NorthwindExample.Service\NorthwindExample.Service.csproj" />
+  </ItemGroup>
+
 </Project>

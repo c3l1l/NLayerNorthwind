@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NorthwindExample.Service\NorthwindExample.Service.csproj" />
+    <ProjectReference Include="..\NorthwindExample.Caching\NorthwindExample.Caching.csproj" />
   </ItemGroup>
 
 </Project>
