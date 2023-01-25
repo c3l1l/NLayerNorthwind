@@ -33,7 +33,7 @@ namespace NorthwindExample.Caching.Services
             _memoryCache = memoryCache;
             if (!_memoryCache.TryGetValue(CacheProductKey,out _))
             {
-                _memoryCache.Set(CacheProductKey, _repository.GetAll().ToList());
+                _memoryCache.Set(CacheProductKey, _repository.GetProductsWithCategory().Result);
             }
         }
 
@@ -79,6 +79,13 @@ namespace NorthwindExample.Caching.Services
             var productsWithCategoryDto=_mapper.Map<List<ProductsWithCategoryDto>>(products);
             return Task.FromResult(productsWithCategoryDto);
         }
+        public async Task<ProductWithCategoryAndSupplierDto> GetProductWithCategoryAndSupplier(int id)
+        {
+            var product =await _repository.GetProductWithCategoryAndSupplier(id);
+                
+            var productWithCategoryAndSupplierDto=_mapper.Map<ProductWithCategoryAndSupplierDto>(product);
+            return productWithCategoryAndSupplierDto;
+        }
 
         public async Task RemoveAsync(Product entity)
         {
@@ -108,7 +115,17 @@ namespace NorthwindExample.Caching.Services
 
         public async Task CacheAllProductsAsync()
         {
-            _memoryCache.Set(CacheProductKey, await _repository.GetAll().ToListAsync());
+            // _memoryCache.Set(CacheProductKey, await _repository.GetProductsWithCategory().Result);
+            _memoryCache.Set(CacheProductKey, _repository.GetProductsWithCategory().Result);
+        }
+
+        public async Task<List<ProductWithCategoryAndSupplierDto>> GetProductsWithCategoryAndSupplier()
+        {
+            var products = await _repository.GetProductsWithCategoryAndSupplier();
+
+            var productsWithCategoryAndSupplierDto = _mapper.Map<List<ProductWithCategoryAndSupplierDto>>(products);
+            return productsWithCategoryAndSupplierDto;
         }
     }
+    
 }

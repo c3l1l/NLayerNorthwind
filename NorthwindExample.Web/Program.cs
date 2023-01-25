@@ -17,6 +17,11 @@ builder.Services.AddHttpClient<CategoryApiService>(opt =>
     opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
 });
 
+builder.Services.AddHttpClient<SupplierApiService>(opt =>
+{
+    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+});
+
 var app = builder.Build();
 
 

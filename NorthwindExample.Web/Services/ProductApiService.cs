@@ -15,6 +15,16 @@ namespace NorthwindExample.Web.Services
             var response =await _httpClient.GetFromJsonAsync<CustomResponseDto<List<ProductsWithCategoryDto>>>("products/GetProductsWithCategory");
             return response.Data;
         }
+        public async Task<ProductWithCategoryAndSupplierDto> GetProductWithCategoryAndSupplierAsync(int id)
+        {
+            var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<ProductWithCategoryAndSupplierDto>>($"products/GetProductWithCategoryAndSupplier/{id}");
+            return response.Data;
+        }
+        public async Task<List<ProductWithCategoryAndSupplierDto>> GetProductsWithCategoryAndSupplierAsync()
+        {
+            var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<List<ProductWithCategoryAndSupplierDto>>>("products/GetProductsWithCategoryAndSupplier");
+            return response.Data;
+        }
         public async Task<ProductDto> GetByIdAsync(int id)
         {
             var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<ProductDto>>($"products/{id}");
@@ -27,9 +37,9 @@ namespace NorthwindExample.Web.Services
             var responseBody = await response.Content.ReadFromJsonAsync<CustomResponseDto<ProductDto>>();
             return responseBody.Data;
         }
-        public async Task<bool> UpdateAsync(ProductUpdateDto productUpdateDto)
+        public async Task<bool> UpdateAsync(ProductDto productDto)
         {
-            var response = await _httpClient.PutAsJsonAsync("products", productUpdateDto);
+            var response = await _httpClient.PutAsJsonAsync("products", productDto);
             return response.IsSuccessStatusCode;
         }
         public async Task<bool> RemoveAsync(int id)

@@ -11,5 +11,7 @@ namespace NorthwindExample.Core.Repositories
     public interface IProductRepository:IGenericRepository<Product>
     {
         Task<List<Product>> GetProductsWithCategory();
+        Task<Product> GetProductWithCategoryAndSupplier(int id);
+        Task<List<Product>> GetProductsWithCategoryAndSupplier();
     }
 }

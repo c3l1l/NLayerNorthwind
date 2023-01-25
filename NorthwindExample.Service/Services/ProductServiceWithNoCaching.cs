@@ -30,6 +30,14 @@ namespace NorthwindExample.Service.Services
             return productWithCategoryDto;
         }
 
-        
+        public Task<List<ProductWithCategoryAndSupplierDto>> GetProductsWithCategoryAndSupplier()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ProductWithCategoryAndSupplierDto> GetProductWithCategoryAndSupplier(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

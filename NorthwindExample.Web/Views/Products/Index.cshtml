@@ -1,14 +1,17 @@
 ﻿@using NorthwindExample.Core.DTOs;
-@model List<ProductsWithCategoryDto>
+@model List<ProductWithCategoryAndSupplierDto>
+@*@model List<ProductsWithCategoryDto>
+*@
 
    
-
+<a class="btn btn-primary" asp-action="Save">Save New Product</a>
 <table class="table table-striped">
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.ProductName)</th>
             <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.CategoryID)</th>
+            <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.SupplierID)</th>
             <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.QuantityPerUnit)</th>
             <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.UnitPrice)</th>
             <th scope="col">@Html.DisplayNameFor(x=>x.GetEnumerator().Current.Discontinued)</th>
@@ -22,9 +25,8 @@
             <tr>
                 <td>@item.ProductId</td>
                 <td>@item.ProductName</td>
-                <td>@item.CategoryID</td>
-                <td><select  asp-items="ViewBag.categories"></select></td>
-
+                <td>@item.Category.CategoryName</td>
+                <td>@item.Supplier.CompanyName</td>
                 <td>@item.QuantityPerUnit</td>
                 <td>@item.UnitPrice</td>
                 <td>@item.Discontinued</td>      
@@ -33,9 +35,6 @@
                 </td>
             </tr>
         }
-        @foreach(var category in ViewBag.categories)
-        {
-            <h1>@category.CategoryName</h1>
-        }
+      
     </tbody>
 </table>

@@ -44,9 +44,9 @@ namespace NorthwindExample.API.Controllers
             return CreateCustomActionResult(CustomResponseDto<ProductDto>.Success(201, productDto));
         }
         [HttpPut]
-        public async Task<IActionResult> Update(ProductUpdateDto productUpdateDto)
+        public async Task<IActionResult> Update(ProductDto productDto)
         {
-            await _productService.UpdateAsync(_mapper.Map<Product>(productUpdateDto));           
+            await _productService.UpdateAsync(_mapper.Map<Product>(productDto));           
             return CreateCustomActionResult(CustomResponseDto<NoContentDto>.Success(204));
 
         }
@@ -64,6 +64,20 @@ namespace NorthwindExample.API.Controllers
         {
             var productsWithCategoryDtos = await _productService.GetProductsWithCategory();            
             return CreateCustomActionResult(CustomResponseDto<List<ProductsWithCategoryDto>>.Success(200, productsWithCategoryDtos));
+        }
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetProductWithCategoryAndSupplier(int id)
+        {
+            var product = await _productService.GetProductWithCategoryAndSupplier(id);
+            return CreateCustomActionResult(CustomResponseDto<ProductWithCategoryAndSupplierDto>.Success(200, product));
+
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetProductsWithCategoryAndSupplier()
+        {
+            var products = await _productService.GetProductsWithCategoryAndSupplier();
+            return CreateCustomActionResult(CustomResponseDto<List<ProductWithCategoryAndSupplierDto>>.Success(200, products));
+
         }
     }
 }

@@ -19,8 +19,19 @@ namespace NorthwindExample.Repository.Repositories
 
         public async Task<List<Product>> GetProductsWithCategory()
         {
-            var x=await _context.Products.Include(x=>x.Category).ToListAsync();
-            return x;
+            var products=await _context.Products.Include(x=>x.Category).ToListAsync();
+            return products;
+        }
+
+        public async Task<Product> GetProductWithCategoryAndSupplier(int id)
+        {
+            var product = await _context.Products.Include(x => x.Category).Include(x=>x.Supplier).Where(x=>x.ProductID==id).FirstOrDefaultAsync();
+            return product;
+        }
+        public async Task<List<Product>> GetProductsWithCategoryAndSupplier()
+        {
+            var products = await _context.Products.Include(x => x.Category).Include(x=>x.Supplier).ToListAsync();
+            return products;
         }
     }
 }

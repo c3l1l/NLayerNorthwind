@@ -16,11 +16,15 @@ namespace NorthwindExample.Service.Mapping
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<Product, ProductAddDto>().ReverseMap();
             CreateMap<Product, ProductUpdateDto>().ReverseMap();
+            CreateMap<ProductsWithCategoryDto, Product>().ReverseMap();
+            CreateMap<ProductWithCategoryAndSupplierDto, Product>().ReverseMap();
+
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<CategoryAddDto, Category>().ForMember(x => x.Picture,opt=>opt.Ignore());
             CreateMap<CategoryUpdateDto, Category>().ForMember(x => x.Picture,opt=>opt.Ignore());
 
-            CreateMap<ProductsWithCategoryDto, Product>().ReverseMap();
+            CreateMap<Supplier, SupplierDto>().ReverseMap();
+
           
         }
     }

@@ -11,5 +11,7 @@ namespace NorthwindExample.Core.Services
     public interface IProductService:IService<Product>
     {
         Task<List<ProductsWithCategoryDto>> GetProductsWithCategory();
+        Task<ProductWithCategoryAndSupplierDto> GetProductWithCategoryAndSupplier(int id);
+        Task<List<ProductWithCategoryAndSupplierDto>> GetProductsWithCategoryAndSupplier();
     }
 }
